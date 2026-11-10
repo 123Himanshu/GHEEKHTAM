@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#120a06" />
+    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg?v=3" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png?v=3" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png?v=3" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png?v=3" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Ghee Khtam Fight" />
+    <title>Ghee Khtam Fight — Political Satire Fighter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Teko:wght@500;700&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="/assets/main-965e97c1.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/net-20a526c2.js">
+    <link rel="modulepreload" crossorigin href="/assets/lib-b871b915.js">
+    <link rel="stylesheet" crossorigin href="/assets/style-7c7f507a.css">
+    <link rel="icon" type="image/png" sizes="512x512" href="/brand/icon-512.png?v=3" />
+<style id="sd-mobile">
+  html, body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  canvas { touch-action: none; display: block; }
+  @supports (height: 100dvh) { html, body { min-height: 100dvh; } }
+  @media (pointer: coarse) { button, a, [role="button"] { touch-action: manipulation; } }
+</style>
+<style id="sd-brand">
+  #supporters { position: fixed; top: 10px; right: 12px; z-index: 70; display: flex; gap: 6px; flex-wrap: wrap;
+    justify-content: flex-end; align-items: center; max-width: 52vw; pointer-events: auto; }
+  #supporters .sup-title { font: 700 9px/1 system-ui, sans-serif; letter-spacing: .16em; color: #ffe3a0; opacity: .9; }
+  #supporters .sup-link { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; padding: 4px 9px;
+    border: 1.5px solid rgba(255,227,160,.55); border-radius: 999px; background: rgba(0,0,0,.62); color: #fff6df;
+    text-decoration: none; font: 600 10px/1.1 system-ui, sans-serif; white-space: nowrap; }
+  #supporters .sup-link b { font-size: 8px; letter-spacing: .08em; color: #f7c948; font-weight: 800; }
+  #supporters .sup-link:hover, #supporters .sup-link:focus-visible { border-color: #ffe3a0; background: rgba(0,0,0,.8); }
+  @media (max-width: 720px) { #supporters { max-width: 46vw; } #supporters .sup-title { display: none; } #supporters .sup-link { font-size: 9px; min-height: 28px; padding: 3px 7px; } }
+</style>
+<style id="sd-controls-style">
+  #sd-ctrl-tab { position: fixed; right: 0; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl;
+    z-index: 66; padding: 14px 8px; border: 1.5px solid rgba(255,227,160,.55); border-right: 0; border-radius: 10px 0 0 10px;
+    background: rgba(12,6,2,.86); color: #ffe3a0; font: 700 10px/1 'Teko', system-ui, sans-serif; letter-spacing: .22em;
+    cursor: pointer; backdrop-filter: blur(6px); display: none; }
+  #sd-ctrl-tab:hover { background: rgba(28,14,4,.95); border-color: #ffe3a0; }
+  #sd-ctrl-tab { animation: sd-ctrl-pulse 2.6s ease-in-out infinite; }
+  @keyframes sd-ctrl-pulse { 0%,100% { box-shadow: 0 0 0 rgba(255,193,26,0); } 50% { box-shadow: 0 0 14px rgba(255,193,26,.45); } }
+  /* controls card */
+  #select > .controls { display: none !important; }
+  #sd-controls { position: fixed; right: 14px; top: 50%; z-index: 66; width: 308px; max-height: 78vh;
+    display: flex; flex-direction: column; overflow: hidden; border-radius: 14px;
+    border: 1.5px solid rgba(255,227,160,.5); background: linear-gradient(165deg, rgba(26,14,6,.96), rgba(9,4,2,.97));
+    box-shadow: 0 18px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,227,160,.14); color: #ffe9c9;
+    font-family: 'Teko', system-ui, sans-serif; backdrop-filter: blur(8px);
+    transform: translateY(calc(-50% + 14px)) scale(.98); opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .18s ease, transform .22s cubic-bezier(.2,.8,.2,1), visibility .18s; }
+  #sd-controls.sd-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(-50%) scale(1); }
+  .sd-ctrl-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px 8px;
+    border-bottom: 1px solid rgba(255,227,160,.22); font: 700 18px/1 'Bebas Neue', 'Teko', sans-serif; letter-spacing: .16em; color: #ffe3a0; }
+  .sd-ctrl-head button { background: none; border: 0; color: #ffe3a0; font-size: 22px; line-height: 1; cursor: pointer; padding: 0 4px; }
+  .sd-ctrl-body { padding: 10px 12px 12px; overflow-y: auto; }
+  .sd-ctrl-body section { padding: 8px 0 10px; border-bottom: 1px dashed rgba(255,227,160,.16); }
+  .sd-ctrl-body section:last-of-type { border-bottom: 0; }
+  .sd-ctrl-body h4 { margin: 0 0 6px; font: 700 12px/1 'Teko', sans-serif; letter-spacing: .2em; color: #ffc21a; }
+  .sd-row { display: flex; align-items: center; gap: 6px; margin: 5px 0; font-size: 13px; letter-spacing: .06em; color: #ffe9c9; }
+  .sd-row > span:first-child { width: 52px; color: #c9b089; }
+  .sd-gap { margin-left: 12px; }
+  .sd-keys { display: inline-flex; align-items: center; gap: 4px; }
+  kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; padding: 0 6px;
+    border: 1.5px solid rgba(255,227,160,.62); border-bottom-width: 3px; border-radius: 6px;
+    background: linear-gradient(180deg, #241505, #120a03); color: #fff3d6; font: 600 13px/1 'Teko', system-ui, sans-serif;
+    letter-spacing: .04em; box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+  kbd.wide { min-width: 62px; }
+  kbd.mini { min-width: 20px; height: 20px; font-size: 11px; vertical-align: middle; }
+  .sd-note { font-size: 11px; color: #a98f68; margin-left: 4px; letter-spacing: .04em; }
+  .sd-touch p { margin: 0; font-size: 12.5px; line-height: 1.4; color: #d9c2a0; }
+  .sd-touch b { color: #ffe3a0; }
+  .sd-ctrl-foot { margin: 8px 0 0; font-size: 11px; color: #a98f68; letter-spacing: .05em; }
+  @media (max-width: 760px) {
+    #sd-controls { width: min(86vw, 300px); right: 8px; max-height: 70vh; }
+    #sd-ctrl-tab { padding: 11px 7px; }
+  }
+</style>
+<style id="sd-legal-theme">
+  /* opening notice palette */
+  #legal { background: rgba(31, 30, 29, .64); backdrop-filter: blur(7px); color: #1f1e1d;
+    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  .legal-card { background: #faf9f5; border: 1px solid #e7e1d6; border-radius: 20px; max-width: 680px; padding: 0 !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,.38), 0 2px 0 rgba(255,255,255,.5) inset; overflow: hidden;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1f1e1d; position: relative; max-height: 88vh; }
+  .legal-card::before { content: ''; display: block; height: 4px; background: linear-gradient(90deg, #d97757, #e8b4a0 55%, #d97757); }
+  .legal-card h2#legal-title { margin: 0; padding: 20px 26px 6px; font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    font-size: clamp(20px, 2.6vw, 27px); line-height: 1.15; letter-spacing: .01em; color: #1f1e1d; font-weight: 600; }
+  .legal-card h2#legal-title::before { content: 'GHEE KHTAM FIGHT'; display: block; margin-bottom: 8px;
+    font-family: 'Segoe UI', system-ui, sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: .2em; color: #c15f3c; }
+  .legal-scroll { padding: 0 26px 6px; color: #3d3929; font-size: 14px; line-height: 1.6; scrollbar-width: thin; scrollbar-color: #d9d2c5 transparent; }
+  .legal-scroll p { margin: 0 0 10px; color: #3d3929; }
+  .legal-scroll .legal-hi { background: #f7f1e7; border-left: 3px solid #d97757; border-radius: 8px; padding: 12px 14px;
+    color: #4a3b32; margin: 4px 0 14px; }
+  .legal-scroll ul { margin: 0 0 12px; padding-left: 20px; }
+  .legal-scroll li { margin: 0 0 7px; color: #3d3929; }
+  .legal-scroll li::marker { color: #d97757; }
+  .legal-scroll a { color: #b0553a; text-decoration: underline; text-underline-offset: 2px; }
+  .legal-scroll a:hover { color: #8f4227; }
+  .legal-scroll hr { border: 0; border-top: 1px solid #e7e1d6; margin: 16px 0 14px; }
+  .legal-scroll h3 { color: #b0553a; font-family: Georgia, 'Times New Roman', serif; font-size: 17px; margin: 0 0 10px; }
+  .legal-scroll .legal-agree { color: #6b6659; font-size: 12.5px; }
+  #legal-ok { margin: 12px 26px 20px; max-width: none; width: calc(100% - 52px); min-height: 46px; border: 0;
+    border-radius: 999px; background: #d97757; color: #fff; font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 12.5px; font-weight: 700; letter-spacing: .09em; padding: 0 20px; cursor: pointer;
+    box-shadow: 0 6px 16px rgba(217,119,87,.32); transition: background .15s ease, transform .12s ease; }
+  #legal-ok:hover:not(:disabled) { background: #c15f3c; transform: translateY(-1px); }
+  #legal-ok:disabled { background: #ece5d8; color: #8a8478; box-shadow: none; cursor: default; }
+  .legal-scroll::-webkit-scrollbar { width: 8px; }
+  .legal-scroll::-webkit-scrollbar-thumb { background: #d9d2c5; border-radius: 8px; }
+  /* logo sizing */
+  #title .logo { font-size: clamp(46px, 9.2vw, 122px); letter-spacing: 3px; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .legal-card { max-height: 92vh; border-radius: 16px; }
+    .legal-card h2#legal-title { padding: 16px 18px 4px; }
+    .legal-scroll { padding: 0 18px 4px; font-size: 13px; }
+    #legal-ok { margin: 10px 18px 16px; width: calc(100% - 36px); }
+    #title .logo { font-size: clamp(34px, 10vw, 68px); }
+  }
+</style>
+<style id="sd-online-guard">
+  /* hide multiplayer when no API */
+  .sd-static-mode #online-btn { display: none !important; }
+  .sd-static-mode #online-bar, .sd-static-mode #online { display: none !important; }
+</style>
+<style id="sd-brand-logo">
+  #sd-gk { display: block; width: clamp(70px, 10vh, 116px); height: auto; margin: 0 auto 10px;
+    filter: drop-shadow(0 10px 26px rgba(255,170,40,.32)); pointer-events: none; } 
+</style>
+<style id="sd-logo-gold">
+  #title .logo, #title .logo span, #loading .logo, #loading .logo span {
+    background: linear-gradient(#fffbe8 4%, #ffe28a 38%, #ffc21a 62%, #e07a12 96%) !important;
+    -webkit-background-clip: text !important; background-clip: text !important;
+    color: transparent !important;
+    filter: drop-shadow(4px 4px #3a0e00) drop-shadow(0 0 26px rgba(255,150,20,.35)) !important;
+  }
+</style>
+
+</head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <div id="vignette"></div>
+    <div id="flash"></div>
+    <div id="popups"></div>
+
+    
+    <div id="hud" class="hidden">
+      <div class="top">
+        <div class="side left">
+          <img class="portrait" alt="" />
+          <div class="bar-wrap">
+            <div class="name"></div>
+            <div class="hp"><div class="hp-trail"></div><div class="hp-fill"></div></div>
+            <div class="wins"><span class="win"></span><span class="win"></span></div>
+          </div>
+        </div>
+        <div id="timer">60</div>
+        <div class="side right">
+          <img class="portrait" alt="" />
+          <div class="bar-wrap">
+            <div class="name"></div>
+            <div class="hp"><div class="hp-trail"></div><div class="hp-fill"></div></div>
+            <div class="wins"><span class="win"></span><span class="win"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="combo left"></div>
+      <div class="combo right"></div>
+      <div class="bottom">
+        <div class="meter left"><div class="meter-label">SHAKTI</div><div class="meter-bar"><div class="meter-fill"></div></div></div>
+        <div class="meter right"><div class="meter-label">SHAKTI</div><div class="meter-bar"><div class="meter-fill"></div></div></div>
+      </div>
+      <button id="pause-btn" title="Pause (Esc)">II</button>
+      <div id="newsdesk">
+        <div class="desk">
+          <div class="live">● LIVE</div>
+          <div class="anchor godi"><img alt="" /><div class="meta"><span class="channel"></span><span class="who"></span><span class="line"></span></div></div>
+          <div class="vs-mini">VS</div>
+          <div class="anchor troll"><img alt="" /><div class="meta"><span class="channel"></span><span class="who"></span><span class="line"></span></div></div>
+        </div>
+        <div class="ticker"><span class="tag">BREAKING</span><div class="ticker-window"><div class="ticker-track"></div></div></div>
+      </div>
+    </div>
+    <div id="announce"></div>
+
+    <button id="budget-meter" type="button" aria-label="Use the budget"><span class="hint" aria-hidden="true"><span class="hint-key">PRESS <kbd>B</kbd></span><span class="hint-touch">TAP 📕</span> FOR BUDGET MAYHEM!</span><b>📕</b><span class="label">BUDGET</span><div class="track"><i></i></div><span class="key">B</span></button>
+
+    <div id="cinema">
+      
+      <div id="trailer-video">
+        <video playsinline preload="none" disablepictureinpicture></video>
+        <div class="load">
+          <small>GHEE KHTAM FIGHT</small>
+          <b>OPERATION KOHINOOR</b>
+          <span class="wait">Trailer aa raha hai…</span>
+          <span class="oops">Trailer load nahi hua. Net check karke dobara try karo.</span>
+          <div class="bar"><i></i></div>
+          <span class="label"></span>
+        </div>
+        <p class="sound">🔇 Awaaz ke liye tap karo</p>
+      </div>
+      <div id="cine-fade"></div>
+      <div class="cine-bar top"></div>
+      <div class="cine-bar bottom"></div>
+      
+      <div id="trailer-ui" aria-hidden="true">
+        <p id="trl-line"><b></b><span></span></p>
+        <div id="trl-say"></div>
+        <div id="trl-title"><small>GHEE KHTAM FIGHT</small><h1>OPERATION KOHINOOR</h1><em>COMING SOON</em></div>
+        <div id="trl-flash"></div>
+      </div>
+      <p id="cine-caption"></p>
+      <div id="cine-title"><small></small><h1></h1></div>
+      <button id="cine-skip" type="button">SKIP ›</button>
+    </div>
+    <div id="super-banner"></div>
+
+    <div id="touch">
+      <div class="stick" aria-label="Move"><div class="ring"></div><div class="knob"></div></div>
+      <div class="actions">
+        <button data-touch="grab" class="grab">GRAB</button>
+        <button data-touch="super" class="super">SUPER</button>
+        <button data-touch="punch" class="punch">PUNCH</button>
+        <button data-touch="kick" class="kick">KICK</button>
+        
+        <button id="touch-budget" class="touch-budget" type="button" hidden aria-label="Use the budget">📕<small>BUDGET</small></button>
+      </div>
+    </div>
+
+    <div id="rotate" aria-live="polite">
+      <div class="phone-icon"></div>
+      <h2>ROTATE YOUR PHONE</h2>
+      <p>Ghee Khtam Fight is played in landscape.</p>
+    </div>
+
+    
+    <div id="ios-swipe" class="hidden" aria-live="polite">
+      <div class="swipe-hand"></div>
+      <h2>SWIPE UP FOR FULL SCREEN</h2>
+      <p>Tip: Share → <b>Add to Home Screen</b> to always play full screen.</p>
+      <button type="button" class="swipe-skip">Play with toolbar</button>
+    </div>
+
+    <div id="loading" class="screen"><div class="logo">GHEE <span>KHTAM FIGHT</span></div><p>Loading neta assets…</p><div class="load-bar"><i id="load-fill"></i></div></div>
+
+    <div id="title" class="screen hidden">
+      <div class="logo">GHEE <span>KHTAM FIGHT</span></div>
+      <div class="tag">THE GREAT CHAIR CLASH</div>
+      <div class="press">PRESS ENTER / CLICK TO START</div>
+      <div class="press-touch">TAP TO START</div>
+      <div class="disclaimer">Political satire and parody. Not connected to or endorsed by any person or party.</div>
+    </div>
+
+    
+    <div id="online" class="screen hidden">
+      <h1>PLAY WITH A FRIEND</h1>
+      <div id="on-home" class="on-panel">
+        <button id="on-host" class="big" type="button">HOST A ROOM</button>
+        <div class="on-or">or enter your friend's room code</div>
+        <form id="on-join-form" class="on-join">
+          <input id="on-code" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="CODE" aria-label="Room code" />
+          <button class="big" type="submit">JOIN</button>
+        </form>
+      </div>
+      <div id="on-hosting" class="on-panel hidden">
+        <div class="on-label">ROOM CODE</div>
+        <div id="on-room-code" class="on-code">····</div>
+        <div class="on-share">
+          <button id="on-wa" type="button" hidden aria-hidden="true"></button>
+          <button id="on-copy" type="button">Copy link</button>
+        </div>
+        <div class="on-wait"><span class="dot"></span> Waiting for your friend to join…</div>
+      </div>
+      <div id="on-connecting" class="on-panel hidden">
+        <div class="on-wait"><span class="dot"></span> <span id="on-connecting-text">Connecting…</span></div>
+      </div>
+      <div id="on-error" class="on-panel hidden">
+        <div class="on-label">COULDN'T CONNECT</div>
+        <p id="on-error-text"></p>
+      </div>
+      <button id="on-back" class="on-back" type="button">BACK</button>
+    </div>
+
+    
+    <div id="select" class="screen hidden">
+      <h1>SELECT YOUR NETA</h1>
+      
+      
+      <div class="sel-vs">VS</div>
+
+      <button id="plate-p1" class="plate p1" type="button" aria-label="Choose your neta">
+        <span class="plate-tag">1P · YOU</span>
+        <span class="plate-name"></span>
+        <span class="plate-party"></span>
+        <span class="plate-super"></span>
+        <span class="plate-desc"></span>
+      </button>
+      <button id="plate-p2" class="plate p2" type="button" aria-label="Choose the opponent">
+        <span class="plate-tag">CPU</span>
+        <span class="plate-name"></span>
+        <span class="plate-party"></span>
+        <span class="plate-super"></span>
+        <span class="plate-desc"></span>
+      </button>
+
+      <div class="sel-center">
+        <div id="pick-prompt" class="pick-prompt">PICK YOUR NETA</div>
+        <div id="neta-download" class="neta-download hidden">
+          <div class="dl-info">
+            <span id="dl-title">DOWNLOADING NETA…</span>
+            <span id="dl-pct">0%</span>
+          </div>
+          <div class="dl-track"><div id="dl-fill" class="dl-fill"></div></div>
+        </div>
+        <div id="bapu-quest" class="hidden"></div>
+        <div class="grid">
+          <button class="tile" type="button" data-tile="modi" style="--accent: #ff9933">
+            <img data-portrait="modi" src="/faces/modi.webp?v=20261101_smooth" alt="MitraMan" />
+            <span class="tile-name">CHAI CHACHA</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="rahul" style="--accent: #2e9bff">
+            <img data-portrait="rahul" src="/faces/rahul.webp?v=20261101_smooth" alt="Yuva Yatri" />
+            <span class="tile-name">YUVA YATRI</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="didi" style="--accent: #22b35e">
+            <img data-portrait="didi" src="/faces/didi.webp?v=20261101_smooth" alt="Didi Dangal" />
+            <span class="tile-name">DIDI DANGAL</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="trump" style="--accent: #e0262f">
+            <img data-portrait="trump" src="/faces/trump.webp?v=20261101_smooth" alt="Tariff Tau" />
+            <span class="tile-name">TARIFF TAU</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="yogi" style="--accent: #f05a00">
+            <img data-portrait="yogi" src="/faces/yogi.webp?v=20261101_smooth" alt="Bull Baba" />
+            <span class="tile-name">BULL BABA</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="nitin" style="--accent: #ff9a1f">
+            <img data-portrait="nitin" src="/faces/nitin.webp?v=20261101_smooth" alt="Toll Tau" />
+            <span class="tile-name">TOLL TAU</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="ravi" style="--accent: #8b5cf6">
+            <img data-portrait="ravi" src="/faces/ravi.webp?v=20261104_face" alt="Late Latkesh" />
+            <span class="tile-name">LATE LATKESH</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="lalu" style="--accent: #16a34a">
+            <img data-portrait="lalu" src="/faces/lalu.webp?v=20261104_face" alt="Rail Rustam" />
+            <span class="tile-name">RAIL RUSTAM</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="amit" style="--accent: #cbd5e1">
+            <img data-portrait="amit" src="/faces/amit.webp?v=20261107_real" alt="Neeti Neta" />
+            <span class="tile-name">NEETI NETA</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile" type="button" data-tile="dhruv" style="--accent: #22d3ee">
+            <img data-portrait="dhruv" src="/faces/dhruv.webp?v=20261107_real" alt="Fact Fakir" />
+            <span class="tile-name">FACT FAKIR</span>
+            <i class="cur p1">1P</i><i class="cur p2">CPU</i>
+          </button>
+          <button class="tile boss" type="button" data-tile="mbapu" style="--accent: #ffd700">
+            <span class="boss-tag">BOSS</span>
+            <span class="lock-mark" aria-hidden="true">
+              <svg viewBox="0 0 64 80">
+                <path class="sil" d="M32 12c-10 0-17 8-17 19 0 8 4 15 9 18v5C14 57 5 63 3 80h58c-2-17-11-23-21-26v-5c5-3 9-10 9-18 0-11-7-19-17-19z" />
+                <g class="specs"><circle cx="24" cy="31" r="6.2" /><circle cx="40" cy="31" r="6.2" /><path d="M30.2 30.6c1.2-1.3 2.4-1.3 3.6 0M17.8 30l-3.3-1.4M46.2 30l3.3-1.4" /></g>
+              </svg>
+              <b>?</b>
+            </span>
+            <img data-portrait="mbapu" src="/faces/mbapu.webp?v=20261101_smooth" alt="Shaanti Shah" />
+            <span class="tile-name">SHAANTI SHAH</span>
+            <i class="cur p2">BOSS</i>
+          </button>
+          <button class="tile trailer" type="button" data-tile="trailer" style="--accent: #ffd36b" aria-label="Watch the Chapter 2 trailer">
+            <span class="boss-tag trl-tag">CH. 2</span>
+            <span class="tile-gem" aria-hidden="true">
+              <svg viewBox="0 0 64 64">
+                <path class="gem" d="M12 24 L22 11 H42 L52 24 L32 55 Z" />
+                <path class="facet" d="M12 24 H52 M22 11 L27 24 L32 55 L37 24 L42 11 M27 24 L32 11 L37 24" />
+                <path class="play" d="M27 29 L40 36.5 L27 44 Z" />
+              </svg>
+            </span>
+            <span class="tile-name">TRAILER</span>
+          </button>
+          <button class="tile random" type="button" data-tile="random" style="--accent: #ffe3a0">
+            <span class="tile-q">?</span>
+            <span class="tile-name">RANDOM</span>
+          </button>
+        </div>
+        <div class="options">
+          <div class="difficulty stage-pick">
+            <span>STAGE</span>
+            <button data-stage="kurzi">GHEE</button>
+            <button data-stage="jantar">JANTAR MAIDAN</button>
+            <button data-stage="road">DESI ROAD</button>
+          </div>
+          <div class="difficulty cpu-level">
+            <span>CPU</span>
+            <button data-diff="easy">EASY</button>
+            <button data-diff="normal">NORMAL</button>
+            <button data-diff="hard">HARD</button>
+          </div>
+        </div>
+        <div class="sel-actions">
+          <button id="online-btn" class="online-btn" type="button">🌐 PLAY WITH A FRIEND</button>
+          <button id="fight-btn" class="big">FIGHT!</button>
+        </div>
+        <div id="online-bar" class="online-bar">
+          <span id="online-status"></span>
+          <button id="online-leave" type="button">LEAVE ROOM</button>
+        </div>
+        <div id="vs-line" class="sr-only" aria-live="polite"></div>
+        <small id="stage-sub" class="sr-only"></small>
+      </div>
+
+      <div class="controls">
+        <b>Pick</b> tap a face (1P, then CPU) · ←/→ you · ↑/↓ CPU &nbsp; <b>Stage</b> T &nbsp; <b>CPU</b> 1/2/3 &nbsp; <b>Fight</b> Enter<br />
+        <b>Move</b> A/D or ←/→ · <b>Jump</b> W or ↑ · <b>Crouch</b> S or ↓ · <b>Block</b> hold back · <b>Punch</b> J · <b>Kick</b> K · <b>Grab</b> I or J+K · <b>Super</b> L / Space · <b>Pause</b> Esc · <b>Music</b> M · <b>Mute</b> N<br />
+        <b>Specials</b> →J, →K, ↓K sweep · <b>Combos</b> J,J,J · J,J,K · J,K,K · K,K · ↓J,J · ↓J,K
+      </div>
+      <div class="touch-help">
+        <b>Stick</b> move · ↑ jump · ↓ crouch · hold back to block &nbsp;|&nbsp; <b>PUNCH · KICK · GRAB · SUPER</b> (when SHAKTI is full)<br />
+        <b>Specials</b> →PUNCH · →KICK · ↓KICK sweep &nbsp;|&nbsp; <b>Combos</b> P,P,P · P,P,K · P,K,K · K,K
+      </div>
+    </div>
+
+    
+    <div id="net-away" class="hidden">
+      <div class="net-away-msg"><div class="dot"></div><span>Waiting for your friend…</span></div>
+      <button id="net-away-leave" type="button">LEAVE ROOM</button>
+    </div>
+    <div id="net-badge" class="hidden"></div>
+
+    <div id="pause" class="screen hidden">
+      <h1>CHAI BREAK ☕</h1>
+      <p class="pause-sub">House adjourned till further notice.</p>
+      <button id="resume-btn" class="big">RESUME</button>
+      <button id="pause-sound-btn">SOUND: ON</button>
+      <button id="quit-btn">QUIT TO SELECT</button>
+    </div>
+
+    <div id="result" class="screen hidden">
+      <div class="paper">
+        <div id="paper-masthead" class="masthead">THE DAILY JUMLA</div>
+        <div id="paper-date" class="dateline"></div>
+        <div id="paper-headline" class="headline"></div>
+        <div class="paper-body">
+          <figure><img id="paper-photo" alt="" /><figcaption id="paper-caption"></figcaption></figure>
+          <div class="cols">
+            <p id="paper-sub" class="paper-sub"></p>
+            <p id="paper-excuse" class="excuse"></p>
+            <p class="filler">Sources say the chai bhaiya in the stands has demanded compensation for broken cups. A stray cow that halted the fight was later seen eating a placard. Exit polls, as usual, were wrong.</p>
+          </div>
+        </div>
+        <div id="result-title" class="stamp">YOU WIN!</div>
+      </div>
+      <p id="result-sub"></p>
+      <div id="bapu-stats" class="hidden"></div>
+      <div class="result-buttons">
+        <button id="rematch-btn" class="big">REMATCH</button>
+        <button id="select-btn">CHARACTER SELECT</button>
+      </div>
+    </div>
+
+    <button id="sound-btn" aria-label="Mute sound">🔊</button>
+
+    
+    <div id="legal" role="alertdialog" aria-modal="true" aria-labelledby="legal-title">
+      <div class="legal-card">
+        <h2 id="legal-title">SATIRE NOTICE · व्यंग्य सूचना</h2>
+        <div class="legal-scroll"><h3>About GHEE KHTAM FIGHT</h3>
+<p>GHEE KHTAM FIGHT is a fictional 3D fighting game built for entertainment. Every character, dialogue, move and event is invented for satire and humour.</p>
+<ul>
+<li>This is a work of fiction and parody. Nothing here is a factual claim, allegation or endorsement.</li>
+<li>It is not affiliated with, sponsored by or connected to any political party, leader, government body or news organisation.</li>
+<li>Cartoon fighting is exaggerated on purpose. Please do not imitate it in real life.</li>
+</ul>
+<p class="legal-hi"><strong>à¤¹à¤¿à¤‚à¤¦à¥€:</strong> à¤¯à¤¹ à¤à¤• à¤•à¤¾à¤²à¥à¤ªà¤¨à¤¿à¤• à¤µà¥à¤¯à¤‚à¤—à¥à¤¯-à¤–à¥‡à¤² à¤¹à¥ˆà¥¤ à¤¸à¤­à¥€ à¤ªà¤¾à¤¤à¥à¤°, à¤¸à¤‚à¤µà¤¾à¤¦ à¤”à¤° à¤˜à¤Ÿà¤¨à¤¾à¤à¤ à¤•à¥‡à¤µà¤² à¤®à¤¨à¥‹à¤°à¤‚à¤œà¤¨ à¤•à¥‡ à¤²à¤¿à¤ à¤—à¤¢à¤¼à¥€ à¤—à¤ˆ à¤¹à¥ˆà¤‚; à¤•à¤¿à¤¸à¥€ à¤°à¤¾à¤œà¤¨à¥€à¤¤à¤¿à¤• à¤¦à¤² à¤¯à¤¾ à¤µà¥à¤¯à¤•à¥à¤¤à¤¿ à¤¸à¥‡ à¤‡à¤¸à¤•à¤¾ à¤•à¥‹à¤ˆ à¤¸à¤‚à¤¬à¤‚à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¥¤</p>
+<p class="legal-agree">By continuing you acknowledge this is fictional satire and parody.</p></div>
+        <button id="legal-ok" type="button" class="ready">I UNDERSTAND · CONTINUE</button>
+      </div>
+    </div>
+
+  <div id="supporters" aria-label="Supporters">
+        <span class="sup-title">SUPPORTERS</span>
+        <a class="sup-link" href="https://www.youtube.com/@FableChess" target="_blank" rel="noopener noreferrer" aria-label="YouTube @FableChess"><b>YouTube</b><span>@FableChess</span></a>
+        <a class="sup-link" href="https://www.youtube.com/@funnyleaks" target="_blank" rel="noopener noreferrer" aria-label="YouTube @funnyleaks"><b>YouTube</b><span>@funnyleaks</span></a>
+        <a class="sup-link" href="https://www.youtube.com/@chaturyugaofficial" target="_blank" rel="noopener noreferrer" aria-label="YouTube @chaturyugaofficial"><b>YouTube</b><span>@chaturyugaofficial</span></a>
+      </div>
+<script id="sd-online-guard-js">
+(function () {
+  var base = document.documentElement;
+  function mark() { base.classList.add('sd-static-mode'); window.__sdOnline = false; }
+  try {
+    var ctl = new AbortController();
+    var timer = setTimeout(function () { try { ctl.abort(); } catch (e) {} }, 2200);
+    fetch('/api/ice', { signal: ctl.signal, headers: { accept: 'application/json' } })
+      .then(function (r) { clearTimeout(timer); if (!r.ok) mark(); else window.__sdOnline = true; })
+      .catch(function () { clearTimeout(timer); mark(); });
+  } catch (e) { mark(); }
+})();
+</script>
+<script id="sd-brand-logo-js">
+(function () {
+  function add() {
+    var t = document.getElementById('title');
+    if (!t || document.getElementById('sd-gk')) return;
+    var l = t.querySelector('.logo');
+    if (!l) return;
+    var img = document.createElement('img');
+    img.id = 'sd-gk'; img.src = '/brand/gk-logo.svg'; img.alt = 'Ghee Khtam Fight';
+    t.insertBefore(img, l);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add();
+  setInterval(add, 2000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+node_modules
+enhanced-prev
+assets-original
+latest
+shots
+analysis
+recovered
+tools
+*.zip
+*.log
+*.err
+.git

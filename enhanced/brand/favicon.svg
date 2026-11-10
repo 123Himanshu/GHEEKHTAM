@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#ffe9a6"/><stop offset="0.45" stop-color="#ffc21a"/><stop offset="1" stop-color="#e07a12"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="0.5" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#2a1505"/><stop offset="1" stop-color="#120a03"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="20" y="20" width="472" height="472" rx="100" fill="none" stroke="url(#g)" stroke-width="12" opacity="0.9"/>
+  <text x="256" y="286" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="212" font-weight="900" letter-spacing="-8" fill="url(#g)">GK</text>
+  <text x="256" y="368" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700" letter-spacing="9" fill="#ffe3a0">GHEE KHTAM</text>
+  <text x="256" y="424" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="16" fill="#ffc21a">FIGHT</text>
+</svg>

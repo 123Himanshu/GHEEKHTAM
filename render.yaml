@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ghee-khtam-fight
+    env: node
+    plan: free
+    buildCommand: ""
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    autoDeploy: true
